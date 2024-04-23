@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja/usuario_form.dart';
 
 class UsuarioView extends StatelessWidget {
   const UsuarioView({super.key});
@@ -13,7 +14,7 @@ class UsuarioView extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Stack(
         alignment: Alignment.bottomCenter,
-        children: [Container(), fundoForm(), fotoUsuario()],
+        children: [Container(), fundoForm(), fundoFotoUsuario(), fotoUsuario()],
       ),
     );
   }
@@ -24,32 +25,52 @@ class UsuarioView extends StatelessWidget {
           future: Future.value(MediaQuery.of(context).size.height * .7),
           builder: (context, snapshot) {
             return AnimatedContainer(
-                duration: Duration(milliseconds: 350),
-                height: snapshot.data ?? 0,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))));
+              duration: Duration(milliseconds: 350),
+              height: snapshot.data ?? 0,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              child: UsuarioForm(),
+            );
           });
     });
   }
 
   fotoUsuario() {
     return Builder(builder: (context) {
-      const altura = 150.0;
+      const altura = 130.0;
       return Positioned(
-          bottom: (MediaQuery.of(context).size.height * .7) - (altura * 0.33),
-          child: circulo(Theme.of(context).colorScheme.primary, altura));
+          bottom: (MediaQuery.of(context).size.height * .7) - (altura * 0.30),
+          child: circulo(
+              Colors.white,
+              altura,
+              Icon(
+                Icons.person,
+                size: 60,
+              )));
     });
   }
 
-  circulo(Color color, double altura) {
+  fundoFotoUsuario() {
+    return Builder(builder: (context) {
+      const altura = 150.0;
+      return Positioned(
+          bottom: (MediaQuery.of(context).size.height * .7) - (altura * 0.33),
+          child: circulo(
+              Theme.of(context).colorScheme.primary, altura, Container()));
+    });
+  }
+
+  circulo(Color color, double altura, Widget child) {
     return Builder(builder: (context) {
       return Container(
-          width: altura,
-          height: altura,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: color));
+        width: altura - 20,
+        height: altura,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+        child: child,
+      );
     });
   }
 }
