@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loja/usuario_view.dart';
+
+import 'login_view.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -10,6 +11,6 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(colorSchemeSeed: Colors.blue, useMaterial3: true),
         title: 'Loja',
-        home: UsuarioView());
+        home: LoginView());
   }
 }
