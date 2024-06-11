@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loja/usuario_helper.dart';
+import 'package:loja/usuario_helper_sharedprefs.dart';
+import 'package:loja/usuario_view.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -27,6 +30,7 @@ class LoginForm extends StatelessWidget {
                   border: OutlineInputBorder(),
                   label: Text("Senha"),
                 ),
+                obscureText: true,
                 onChanged: (value) => senha = value,
                 validator: (value) => (value?.length ?? 0) > 3
                     ? null
@@ -37,8 +41,9 @@ class LoginForm extends StatelessWidget {
                 children: [
                   OutlinedButton(
                       onPressed: () {
-                        print("Limpar foi apertado");
-                        _formKey.currentState!.reset();
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => UsuarioView(),
+                        ));
                       },
                       child: const Text("Registrar-se")),
                   OutlinedButton(
@@ -48,12 +53,24 @@ class LoginForm extends StatelessWidget {
                       },
                       child: const Text("Limpar")),
                   OutlinedButton(
-                      onPressed: () {
+                      onPressed: () async {
+
+
                         if (_formKey.currentState!.validate()) {
-                          print("Dados válidos");
-                        } else {
-                          print("Dados inválidos");
+                          final usuario =
+                              await UsuarioHelperSharedPrefs().restaurar();
+                          if (usuario != null) {
+                            if (usuario.isValid(senha!)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Usuário válido!")));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Usuário inválido!")));
+                            }
+                          }
                         }
+
+                        
                       },
                       child: const Text("Entrar")),
                 ],

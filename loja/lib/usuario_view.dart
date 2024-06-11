@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja/usuario_form.dart';
+import 'package:loja/usuario_helper.dart';
+import 'package:loja/usuario_helper_sharedprefs.dart';
 
 class UsuarioView extends StatelessWidget {
   const UsuarioView({super.key});
@@ -32,7 +34,9 @@ class UsuarioView extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              child: UsuarioForm(),
+              child: UsuarioForm(
+                helper: UsuarioHelperSharedPrefs(),
+              ),
             );
           });
     });
