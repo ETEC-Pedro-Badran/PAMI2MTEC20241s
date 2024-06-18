@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loja/usuario_helper.dart';
+import 'package:loja/home_view.dart';
+
 import 'package:loja/usuario_helper_sharedprefs.dart';
 import 'package:loja/usuario_view.dart';
 
@@ -54,23 +55,21 @@ class LoginForm extends StatelessWidget {
                       child: const Text("Limpar")),
                   OutlinedButton(
                       onPressed: () async {
-
-
                         if (_formKey.currentState!.validate()) {
                           final usuario =
                               await UsuarioHelperSharedPrefs().restaurar();
                           if (usuario != null) {
                             if (usuario.isValid(senha!)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Usuário válido!")));
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) => HomeView(),
+                              ));
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text("Usuário inválido!")));
                             }
                           }
                         }
-
-                        
                       },
                       child: const Text("Entrar")),
                 ],
